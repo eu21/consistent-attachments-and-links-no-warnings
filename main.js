@@ -4472,28 +4472,28 @@ var ConsistentAttachmentsAndLinksPlugin = class extends import_PluginBase.Plugin
     return new ConsistentAttachmentsAndLinksPluginSettingsTab(this);
   }
   onloadComplete() {
-    if (this.settings.showWarning) {
-      const notice = new import_obsidian4.Notice(createFragment((f) => {
-        f.appendText("Starting from ");
-        appendCodeBlock(f, "v3.0.0");
-        f.appendText(", the plugin ");
-        appendCodeBlock(f, "Consistent Attachments and Links");
-        f.appendText(" has setting ");
-        appendCodeBlock(f, "Attachment Subfolder");
-        f.appendText(" removed. This is a BREAKING CHANGE.");
-        f.appendChild(createEl("br"));
-        f.appendChild(createEl("a", { href: "https://github.com/dy-sh/obsidian-consistent-attachments-and-links?tab=readme-ov-file#attachment-subfolder-setting", text: "Read more" }));
-      }), 0);
-      notice.noticeEl.onClickEvent((ev) => {
-        (0, import_Queue.addToQueue)(this.app, async () => {
-          if (ev.target instanceof HTMLAnchorElement) {
-            window.open(ev.target.href, "_blank");
-          }
-          this.settings.showWarning = false;
-          await this.saveSettings(this.settings);
-        });
-      });
-    }
+    // if (this.settings.showWarning) {
+    //   const notice = new import_obsidian4.Notice(createFragment((f) => {
+    //     f.appendText("Starting from ");
+    //     appendCodeBlock(f, "v3.0.0");
+    //     f.appendText(", the plugin ");
+    //     appendCodeBlock(f, "Consistent Attachments and Links");
+    //     f.appendText(" has setting ");
+    //     appendCodeBlock(f, "Attachment Subfolder");
+    //     f.appendText(" removed. This is a BREAKING CHANGE.");
+    //     f.appendChild(createEl("br"));
+    //     f.appendChild(createEl("a", { href: "https://github.com/dy-sh/obsidian-consistent-attachments-and-links?tab=readme-ov-file#attachment-subfolder-setting", text: "Read more" }));
+    //   }), 0);
+    //   notice.noticeEl.onClickEvent((ev) => {
+    //     (0, import_Queue.addToQueue)(this.app, async () => {
+    //       if (ev.target instanceof HTMLAnchorElement) {
+    //         window.open(ev.target.href, "_blank");
+    //       }
+    //       this.settings.showWarning = false;
+    //       await this.saveSettings(this.settings);
+    //     });
+    //   });
+    // }
     this.registerEvent(
       this.app.metadataCache.on("deleted", (file, prevCache) => {
         if (prevCache) {
@@ -4611,7 +4611,7 @@ var ConsistentAttachmentsAndLinksPlugin = class extends import_PluginBase.Plugin
       }
       i++;
       const message = `Checking note # ${i.toString()} / ${notes.length.toString()} - ${note2.path}`;
-      notice.setMessage(message);
+      //notice.setMessage(message);
       console.debug(message);
       await this.lh.checkConsistency(note2, badLinks, badEmbeds, wikiLinks, wikiEmbeds);
     }
@@ -4645,7 +4645,7 @@ var ConsistentAttachmentsAndLinksPlugin = class extends import_PluginBase.Plugin
       }
       i++;
       const message = `Collecting attachments # ${i.toString()} / ${notes.length.toString()} - ${note.path}`;
-      notice.setMessage(message);
+      //notice.setMessage(message);
       console.debug(message);
       if (this.isPathIgnored(note.path)) {
         continue;
@@ -4663,14 +4663,14 @@ var ConsistentAttachmentsAndLinksPlugin = class extends import_PluginBase.Plugin
     }
     notice.hide();
     if (movedAttachmentsCount == 0) {
-      new import_obsidian4.Notice("No files found that need to be moved");
+      //new import_obsidian4.Notice("No files found that need to be moved");
     } else {
-      new import_obsidian4.Notice(`Moved ${movedAttachmentsCount.toString()} attachment${movedAttachmentsCount > 1 ? "s" : ""} from ${processedNotesCount.toString()} note${processedNotesCount > 1 ? "s" : ""}`);
+      //new import_obsidian4.Notice(`Moved ${movedAttachmentsCount.toString()} attachment${movedAttachmentsCount > 1 ? "s" : ""} from ${processedNotesCount.toString()} note${processedNotesCount > 1 ? "s" : ""}`);
     }
   }
   async collectAttachments(note, isVerbose = true) {
     if (this.isPathIgnored(note.path)) {
-      new import_obsidian4.Notice("Note path is ignored");
+      //new import_obsidian4.Notice("Note path is ignored");
       return;
     }
     await this.saveAllOpenNotes();
@@ -4684,10 +4684,10 @@ var ConsistentAttachmentsAndLinksPlugin = class extends import_PluginBase.Plugin
     }
     if (result.movedAttachments.length == 0) {
       if (isVerbose) {
-        new import_obsidian4.Notice("No files found that need to be moved");
+        //new import_obsidian4.Notice("No files found that need to be moved");
       }
     } else {
-      new import_obsidian4.Notice(`Moved ${result.movedAttachments.length.toString()} attachment${result.movedAttachments.length > 1 ? "s" : ""}`);
+      //new import_obsidian4.Notice(`Moved ${result.movedAttachments.length.toString()} attachment${result.movedAttachments.length > 1 ? "s" : ""}`);
     }
   }
   collectAttachmentsCurrentNote(checking) {
@@ -4714,7 +4714,7 @@ var ConsistentAttachmentsAndLinksPlugin = class extends import_PluginBase.Plugin
       }
       i++;
       const message = `Converting embed paths to relative # ${i.toString()} / ${notes.length.toString()} - ${note.path}`;
-      notice.setMessage(message);
+      //notice.setMessage(message);
       console.debug(message);
       if (this.isPathIgnored(note.path)) {
         continue;
@@ -4727,9 +4727,9 @@ var ConsistentAttachmentsAndLinksPlugin = class extends import_PluginBase.Plugin
     }
     notice.hide();
     if (changedEmbedCount == 0) {
-      new import_obsidian4.Notice("No embeds found that need to be converted");
+      //new import_obsidian4.Notice("No embeds found that need to be converted");
     } else {
-      new import_obsidian4.Notice(`Converted ${changedEmbedCount.toString()} embed${changedEmbedCount > 1 ? "s" : ""} from ${processedNotesCount.toString()} note${processedNotesCount > 1 ? "s" : ""}`);
+      //new import_obsidian4.Notice(`Converted ${changedEmbedCount.toString()} embed${changedEmbedCount > 1 ? "s" : ""} from ${processedNotesCount.toString()} note${processedNotesCount > 1 ? "s" : ""}`);
     }
   }
   convertAllEmbedsPathsToRelativeCurrentNote(checking) {
@@ -4756,7 +4756,7 @@ var ConsistentAttachmentsAndLinksPlugin = class extends import_PluginBase.Plugin
       }
       i++;
       const message = `Converting link paths to relative # ${i.toString()} / ${notes.length.toString()} - ${note.path}`;
-      notice.setMessage(message);
+      //notice.setMessage(message);
       console.debug(message);
       if (this.isPathIgnored(note.path)) {
         continue;
@@ -4769,9 +4769,9 @@ var ConsistentAttachmentsAndLinksPlugin = class extends import_PluginBase.Plugin
     }
     notice.hide();
     if (changedLinksCount == 0) {
-      new import_obsidian4.Notice("No links found that need to be converted");
+      //new import_obsidian4.Notice("No links found that need to be converted");
     } else {
-      new import_obsidian4.Notice(`Converted ${changedLinksCount.toString()} link${changedLinksCount > 1 ? "s" : ""} from ${processedNotesCount.toString()} note${processedNotesCount > 1 ? "s" : ""}`);
+      //new import_obsidian4.Notice(`Converted ${changedLinksCount.toString()} link${changedLinksCount > 1 ? "s" : ""} from ${processedNotesCount.toString()} note${processedNotesCount > 1 ? "s" : ""}`);
     }
   }
   convertAllLinkPathsToRelativeCurrentNote(checking) {
@@ -4827,7 +4827,7 @@ var ConsistentAttachmentsAndLinksPlugin = class extends import_PluginBase.Plugin
     await this.convertAllLinkPathsToRelative();
     await this.collectAllAttachments();
     await this.deleteEmptyFolders();
-    new import_obsidian4.Notice("Reorganization of the vault completed");
+    //new import_obsidian4.Notice("Reorganization of the vault completed");
   }
   async replaceAllWikiEmbedsWithMarkdownEmbeds() {
     await this.saveAllOpenNotes();
@@ -4843,7 +4843,7 @@ var ConsistentAttachmentsAndLinksPlugin = class extends import_PluginBase.Plugin
       }
       i++;
       const message = `Replacing wiki embeds with markdown embeds # ${i.toString()} / ${notes.length.toString()} - ${note.path}`;
-      notice.setMessage(message);
+      //notice.setMessage(message);
       console.debug(message);
       if (this.isPathIgnored(note.path)) {
         continue;
@@ -4854,9 +4854,9 @@ var ConsistentAttachmentsAndLinksPlugin = class extends import_PluginBase.Plugin
     }
     notice.hide();
     if (changedLinksCount == 0) {
-      new import_obsidian4.Notice("No wiki embeds found that need to be replaced");
+      //new import_obsidian4.Notice("No wiki embeds found that need to be replaced");
     } else {
-      new import_obsidian4.Notice(`Replaced ${changedLinksCount.toString()} wiki embed${changedLinksCount > 1 ? "s" : ""} from ${processedNotesCount.toString()} note${processedNotesCount > 1 ? "s" : ""}`);
+      //new import_obsidian4.Notice(`Replaced ${changedLinksCount.toString()} wiki embed${changedLinksCount > 1 ? "s" : ""} from ${processedNotesCount.toString()} note${processedNotesCount > 1 ? "s" : ""}`);
     }
   }
   replaceAllWikiEmbedsWithMarkdownEmbedsCurrentNote(checking) {
@@ -4883,7 +4883,7 @@ var ConsistentAttachmentsAndLinksPlugin = class extends import_PluginBase.Plugin
       }
       i++;
       const message = `Replacing wikilinks with markdown links # ${i.toString()} / ${notes.length.toString()} - ${note.path}`;
-      notice.setMessage(message);
+      //notice.setMessage(message);
       console.debug(message);
       if (this.isPathIgnored(note.path)) {
         continue;
@@ -4894,9 +4894,9 @@ var ConsistentAttachmentsAndLinksPlugin = class extends import_PluginBase.Plugin
     }
     notice.hide();
     if (changedLinksCount == 0) {
-      new import_obsidian4.Notice("No wiki links found that need to be replaced");
+      //new import_obsidian4.Notice("No wiki links found that need to be replaced");
     } else {
-      new import_obsidian4.Notice(`Replaced ${changedLinksCount.toString()} wikilink${changedLinksCount > 1 ? "s" : ""} from ${processedNotesCount.toString()} note${processedNotesCount > 1 ? "s" : ""}`);
+      //new import_obsidian4.Notice(`Replaced ${changedLinksCount.toString()} wikilink${changedLinksCount > 1 ? "s" : ""} from ${processedNotesCount.toString()} note${processedNotesCount > 1 ? "s" : ""}`);
     }
   }
   replaceAllWikilinksWithMarkdownLinksCurrentNote(checking) {
